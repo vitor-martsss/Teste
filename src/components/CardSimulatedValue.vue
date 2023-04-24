@@ -2,7 +2,7 @@
     <div v-if="Object.keys(installments).length" class="card-simulated-value">
         <div class="container">
             <h1>Valores simulados para você</h1>
-            <p class="mobile-title" >Clique nos valores abaixo para obter o preço total do veículo</p>
+            <p class="mobile-title">Clique nos valores abaixo para obter o preço total do veículo</p>
             <span class="rectangle"></span>
             <div class="card-large focus-installments" @mouseover="UpdateTotalVehicle('sixTimes')">
                 <p>6x</p>
@@ -16,7 +16,8 @@
                 </div>
                 <div class="card-small focus-installments" @mouseover="UpdateTotalVehicle('fortyEightTimes')">
                     <p>48x</p>
-                    <p>{{ installments.fortyEightTimes.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}</p>
+                    <p>{{ installments.fortyEightTimes.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}
+                    </p>
                 </div>
             </div>
             <div class="falarConsultor">
@@ -27,7 +28,8 @@
             </div>
         </div>
         <div class="container mobile-value-total">
-            <h1>Valor total do veiculo :</h1>
+            <h1>Valor total do veiculo</h1>
+            <h5>Passe o mouse sobre os valores parcelados ao lado para ver o valor total do veículo.</h5>
             <p class="valueTotal">{{ formatCurrency }}</p>
         </div>
     </div>
@@ -107,9 +109,7 @@ p {
 .focus-installments:hover {
     cursor: pointer;
     transition: transform 0.2s ease-in-out;
-    /* adiciona uma transição suave quando a escala é alterada */
     transform: scale(1.1);
-    /* aumenta a escala em 20% */
 }
 
 .focus-installments:hover>.tag-ipva {
@@ -212,34 +212,10 @@ p {
     padding: 5px 8px;
 }
 
-
-
-/* .card-simulated-value  .container div:first-of-type p:nth-of-type(3){
-    font-family: 'Roboto';
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 16px;
-    color: #7D28F7;
-    position: absolute;
-    left: 651px;
-    top: 735px;
-    background-color: #7D28F7;
-    color: white;
-    width: 85px;
-    height: 14px;
-    border-radius: 16px 0px 0px 16px;
-    padding: 5px 8px;
-
-} */
-
 .card-simulated-value .container div:first-of-type p:nth-of-type(3):hover {
     position: fixed;
     left: 651px;
-    /* ajuste a posição à sua necessidade */
     top: 735px;
-    /* ajuste a posição à sua necessidade */
-
-
 }
 
 .card-simulated-value .container div:first-of-type>p:nth-of-type(2) {
@@ -258,12 +234,6 @@ p {
     color: #444444;
 }
 
-/* .card-simulated-value  .container div:first-of-type {
-    width: 339px;
-    height: 77px;
-    background: #FFFFFF;
-    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
-} */
 
 .card-large {
     display: flex;
@@ -276,12 +246,12 @@ p {
     box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
 }
 
-.card-large > p {
+.card-large>p {
     margin-left: 16px;
 
 }
 
-.container > h1 {
+.container>h1 {
     font-family: 'Roboto';
     font-weight: 700;
     font-size: 20px;
@@ -304,13 +274,22 @@ p {
     margin: 30px
 }
 
-    .mobile-title{
-        display: none;
-    }
+.mobile-title {
+    display: none;
+}
+
+h5 {
+    font-family: 'Roboto';
+    font-weight: 700;
+    font-size: 16px;
+    color: #444444;
+    margin-top: 0px;
+    margin-bottom: 36px;
+}
 
 
 @media only screen and (max-width: 414px) {
-    .card-simulated-value{
+    .card-simulated-value {
         margin-top: 13px;
         display: flex;
         flex-direction: column;
@@ -318,48 +297,49 @@ p {
         margin-right: 14px;
     }
 
-    .container > h1 {
+    .container>h1 {
         display: none;
     }
-    
-    .card-large{
+
+    .card-large {
         width: 100%;
         margin-left: 14px;
         margin-right: 14px;
     }
 
-    .card-small{
+    .card-small {
         width: 100%;
         margin-left: 14px;
         margin-right: 14px;
         margin-bottom: 12px;
     }
 
-    .flex-mobile{
+    .flex-mobile {
         flex-direction: column;
     }
 
-    .focus-installments{
+    .focus-installments {
         margin: 0 auto;
         margin-bottom: 12px;
-        
+
     }
-    .falarConsultor{
+
+    .falarConsultor {
         margin-top: 18px;
         flex-direction: column;
     }
-    
-    .btn-whatsaap{
+
+    .btn-whatsaap {
         margin: 0 auto;
         margin-bottom: 18px;
 
     }
 
-    .valueTotal{
+    .valueTotal {
         font-size: 30px;
     }
 
-    .mobile-value-total{
+    .mobile-value-total {
         display: flex;
         justify-items: center;
         align-items: center;
@@ -367,7 +347,7 @@ p {
         margin-bottom: 32px;
     }
 
-    .mobile-title{
+    .mobile-title {
         display: block;
         font-family: 'Roboto';
         font-weight: 700;
@@ -376,9 +356,13 @@ p {
         margin-top: 0px;
         margin-bottom: 36px;
     }
-    .rectangle{
+
+    .rectangle {
+        display: none;
+    }
+
+    h5 {
         display: none;
     }
 }
-
 </style>
