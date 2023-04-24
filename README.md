@@ -1,29 +1,31 @@
-# app
+# APP Listra
 
-This template should help get you started developing with Vue 3 in Vite.
+Front-end desenvolvido para criar um simulador de empréstimo
 
-## Recommended IDE Setup
+## Instalação
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+Para instalar a aplicação, siga os passos abaixo:
 
-## Customize configuration
+1. Faça o clone do repositório:
+```bash
+git clone https://github.com/devmosilva/app-listra.git
+```
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
+2. Instale as dependências:
+```bash
 npm install
 ```
 
-### Compile and Hot-Reload for Development
-
-```sh
+3. Inicie o servidor de desenvolvimento:
+```bash
 npm run dev
 ```
 
-### Compile and Minify for Production
+4. Acesse a aplicação em seu navegador pelo endereço `http://localhost:5174`.
 
-```sh
-npm run build
-```
+## Tecnologias & dependencias utilizadas. 
+
+- Vue.js 3
+- vue-currency-input
+- vue-toastification
+- vuex
