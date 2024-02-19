@@ -1,7 +1,7 @@
 <template>
     <div>
         <header>
-            <img alt="listra logo" class="logo" src="../assets/logo.svg" width="155" height="45" />
+            <img alt="listra logo" class="logo" src="../assets/empresta_bem_melhor.png" width="155" height="45" />
         </header>
     </div>
 </template>
@@ -19,17 +19,18 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #7D28F7;
+    background-color: #EF6C00;
     color: white;
     height: 61px;
     width: 100%;
 }
 
 .logo {
-    width: 155px;
-    height: 45px;
-    top: 8px;
-    left: 6px;
+    width: 195px;
+    height: 133px;
+    top: -29px;
+    position: absolute;
+    left: 20px; 
 }
 
 </style>

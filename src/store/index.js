@@ -1,54 +1,32 @@
 import { createStore } from "vuex";
+//import axios from 'axios';
 import { useToast } from "vue-toastification";
 
 const toast = useToast();
 
 export default createStore({
     state: {
-      vehicleList: [],
-      vehicleSelect : [],
-      selectedInstallment : '',
-      installments: {}
+        loanResult: null
     },
     mutations: {
-      updateVehicleList (state, vehicleList) {
-        state.vehicleList = vehicleList
-      },
-      updateVehicleSelect(state, vehicleSelect){
-        state.vehicleSelect = vehicleSelect
-      },
-      updateInstallments(state, installments){
-        state.installments = installments
-      }
+        updateLoanResult(state, result) {
+            state.loanResult = result;
+        }
     },
     actions: {
-      getVehicles ({ commit }) {
-        fetch( 'http://127.0.0.1:8484/api/vehicle/index', {
-            method: 'GET',
-            header: {
-              'Accept': 'application/json',
-              "Access-Control-Allow-Origin": "*"
+        async simulateLoan({ commit }, loanData) {
+            try {
+                const response = await axios.post('/api/simular', loanData);
+                commit('updateLoanResult', response.data);
+            } catch (error) {
+                console.error('Erro ao simular empréstimo:', error);
+                toast.error('Erro ao simular empréstimo. Por favor, tente novamente.');
             }
-        } )
-        .then(response=>response.json())
-        .then(data=>{ 
-            commit('updateVehicleList', data)
-        }).catch(error => {
-          toast.error('Falha ao estabelecer conexão com o banco de dados.')
-        })
-      },
-      updateVehicleSelect({ commit }, data){
-        commit('updateVehicleSelect', data)
-      }
+        }
     },
     getters: {
-      //usar os valores parcelados aqui, pq ele atualiza.
-      totalValueLoan(state) {
-        state.valueLoan 
-        
-        return state.valueLoan
-      },
-
-
+        loanResult(state) {
+            return state.loanResult;
+        }
     }
-  });
+});

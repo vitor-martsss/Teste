@@ -3,44 +3,44 @@
         <footer>
             <div class="container">
                 <div class="col-sm-2 ocult-mobile">
-                    <h4>Encontre seu veículo</h4>
+                    <h4>A Empresta</h4>
                     <ul>
-                        <li><a href="#">Encontre seu veículo</a></li>
-                        <li><a href="#">Lojas</a></li>
-                        <li><a href="#">Promoções</a></li>
-                        <li><a href="#">Vantagens</a></li>
-                        <li><a href="#">Garantia Mais</a></li>
-                    </ul>
-                </div>
-                <div class="col-sm-2 ocult-mobile">
-                    <h4>A Empresa</h4>
-                    <ul>
-                        <li><a href="#">Sobre</a></li>
-                        <li><a href="#">Delivery</a></li>
-                        <li><a href="#">Aviso de Privacidade</a></li>
-                        <li><a href="#">Blog Seminovos</a></li>
+                        <li><a href="#">Sobre nós</a></li>
+                        <li><a href="#">Trabalhe Conosco</a></li>
+                        <li><a href="#">Diretrizes de marca</a></li>
+                        <li><a href="#">Políticas de privacidade</a></li>
+                        <li><a href="#">Dicas de segurança</a></li>
                     </ul>
                 </div>
                 <div class="col-sm-2 ocult-mobile">
                     <h4>Atendimento</h4>
                     <ul>
-                        <li><a href="#">Perguntas Frequentes</a></li>
-                        <li><a href="#">Fale Conosco</a></li>
-                        <li><a href="#">Pós-vendas</a></li>
+                        <li><a href="#">Quero ser franqueado</a></li>
+                        <li><a href="#">Marketplace de Crédito</a></li>
+                        <li><a href="#">Problema com seu FGTS?</a></li>
+                        <li><a href="#">WhatsApp Oficial 31 97202-4450</a></li>
                     </ul>
                 </div>
                 <div class="col-sm-2 ocult-mobile">
-                    <h4>Lojistas</h4>
+                    <h4>Nossos produtos</h4>
                     <ul>
-                        <li><a href="#"> Acesse Seminovos Atacado </a></li>
+                        <li><a href="#">Empréstimo Consignado</a></li>
+                        <li><a href="#">Antecipação do saque FGTS</a></li>
+                        <li><a href="#">Empréstimo pessoal</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-2 ocult-mobile">
+                    <h4>Novidades por e-mail</h4>
+                    <ul>
+                        <li><a href="#"> Assine a nossa newsletter</a></li>
                     </ul>
                 </div>
                 <div class="col-sm-2  flex-align ">
-                    <h4>Atendimento ao cliente</h4>
+                    <h4>WhatsApp Oficial </h4>
                     <div class="aling-colum">
                         <div class="banner-number">
                             <p>
-                                0800 000 000
+                                31 97202-4450
                             </p>
                         </div>
                         <img src="../assets/whataspp.png" alt="whatsaap">
@@ -50,16 +50,16 @@
                 <div class="col-sm-2 mobile-follow">
                     <h4>Siga a gente</h4>
                     <ul>
-                        <a href="https://www.facebook.com/listraweb" target="_blank">
+                        <a href="https://www.facebook.com/emprestabemmelhor/?locale=pt_BR" target="_blank">
                             <img src="../assets/Facebook-icon.png" alt="facebook">
                         </a>
-                        <a href="https://www.instagram.com/listradigital/" target="_blank">
+                        <a href="https://www.instagram.com/emprestabemmelhor/" target="_blank">
                             <img src="../assets/Instagram-icon.png" alt="Instagram">
                         </a>
-                        <a href="https://twitter.com/" target="_blank">
+                        <a href="https://twitter.com/Empresta" target="_blank">
                             <img src="../assets/Twitter-icon.png" alt="Twitter">
                         </a>
-                        <a href="https://www.linkedin.com/company/listradigital" target="_blank">
+                        <a href="https://www.linkedin.com/company/empresta-solucoes-e-negocios/?originalSubdomain=br" target="_blank">
                             <img src="../assets/linkedin-icon.png" alt="Linkedin">
                         </a>
                     </ul>
@@ -79,7 +79,7 @@ export default {
 footer {
     width: 100%;
     height: 264.35px;
-    background: rgba(52, 58, 64, 0.8);
+    background:  #EF6C00
 }
 
 .aling-colum {
@@ -101,7 +101,7 @@ footer {
     width: 128px;
     height: 42.57px;
 
-    background: #7D28F7;
+    background: #273E74;
     border-radius: 4px;
 
     margin-right: 16px;

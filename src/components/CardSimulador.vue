@@ -1,50 +1,82 @@
 <template>
     <div>
         <h1>
-            Simulação de Financiamento
+            Simulação de Empréstimo
         </h1>
         <span class="rectangle"></span>
         <div class="card-simulador">
             <div class="container">
-                <div class="title">
-                    <h3> Selecione um veiculo que deseja simular o financiamento </h3>
-                </div>
-                <div class="inputs">
-                    <select name="" id="" v-model="vehicleSelect" @change="updateVehicleSelect">
-                        <option :value="vehicle" v-for="vehicle in vehicleList['vehicles']" :key="vehicle.id">
-                            {{ vehicle.make }}</option>
-                    </select>
-                </div>
-                <div v-show="vehicleSelect != ''">
+                <div class="form-column">
                     <div class="title">
-                        <h3> Digite o valor de entrada </h3>
+                        <h3> Digite o valor desejado </h3>
                     </div>
                     <div class="mobile-colum">
-                        <CurrencyInput :class="{ borderRed: errorValidate }" v-model="entryValue"
-                        :options="{ currency: 'BRL' }" />
-                         <button v-if="true" @click="validateInputs(vehicleSelect)"> Simular </button>
+                        <CurrencyInput :class="{ borderRed: errorValidate }" v-model="entryValue" :options="{ currency: 'BRL' }" />
                     </div>
+
+                    <div class="title">
+                        <h3> Instituição bancária </h3>
+                    </div>
+                    <div class="inputs">
+                        <select v-model="selectedInstitution">
+                            <option v-for="institution in institutions" :key="institution.id" :value="institution.id">
+                                {{ institution.name }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-column">
+                    <div class="title">
+                        <h3>Quantidade de parcelas</h3>
+                    </div>
+                    <div class="inputs">
+                        <select v-model="selectedTerm">
+                            <option value="36">36</option>
+                            <option value="48">48</option>
+                            <option value="60">60</option>
+                            <option value="72">72</option>
+                            <option value="84">84</option>
+                        </select>
+                    </div>
+                    
+                    <div class="title">
+                        <h3> Convênio bancário </h3>
+                    </div>
+                    <div class="inputs">
+                        <select v-model="selectedAgreement">
+                            <option v-for="agreement in agreements" :key="agreement.id" :value="agreement.id">
+                                {{ agreement.name }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-column button-column">
+                    <button @click="validateAndSimulateLoan"> Simular Empréstimo</button>
                 </div>
             </div>
         </div>
     </div>
 </template>
 
-
 <script>
 import { useToast } from "vue-toastification";
-import CurrencyInput from './lib/CurrentInput.vue'
-
+import CurrencyInput from './lib/CurrentInput.vue';
+//import axios from 'axios';
 
 export default {
     props: {
-        vehicleList: []
+        institutions: Array, // Lista de instituições bancárias vindas da API
+        agreements: Array, // Lista de convênios bancários vindos da API
     },
     data() {
         return {
-            vehicleSelect: '',
+            selectedInstitution: null,
+            selectedAgreement: null,
             entryValue: '',
-            errorValidate: false
+            selectedTerm: null,
+            errorValidate: false,
+            loanResult: null,
         }
     },
     setup() {
@@ -53,70 +85,83 @@ export default {
     },
     components: { CurrencyInput },
     methods: {
-        validateInputs(vehicle) {
-            let erros = []
-            this.errorValidate = false;
-
-            if (!this.vehicleSelect) {
-                erros.push('Por favor, selecione um veículo');
-
+        validateAndSimulateLoan() {
+            if (this.validateInputs()) {
+                this.simulateLoan();
             }
-            if (!this.entryValue && this.vehicleSelect && Number(this.entryValue) !== 0) {
-                erros.push('Por favor, preencha um valor de entrada.');
+        },
+        async simulateLoan() {
+            try {
+                const response = await axios.post('HOST/api/simular', {
+                    valor_emprestimo: parseFloat(this.entryValue),
+                    instituicoes: [this.selectedInstitution],
+                    convenios: [this.selectedAgreement],
+                    parcela: parseInt(this.selectedTerm)
+                });
+                this.loanResult = response.data; 
+            } catch (error) {
+                console.error('Erro ao simular empréstimo:', error);
             }
-            if (this.entryValue > vehicle?.price) {
-                erros.push('O valor inserido não pode ser superior ao valor total do veículo. Por favor, insira um valor válido.');
+        },
+        validateInputs() {
+            let errors = [];
+
+            if (!this.selectedInstitution) {
+                errors.push('Por favor, selecione uma instituição bancária.');
             }
 
-            if (Number(this.entryValue) === 0) {
-                erros.push('Por favor, insira um valor válido. O valor não pode ser zero');
+            
+            if (!this.selectedAgreement) {
+                errors.push('Por favor, selecione um convênio bancário.');
             }
 
-            if (Number(this.entryValue) == vehicle?.price) {
-                erros.push('Por favor, insira um valor válido. O valor de entrada não pode ser igual ao valor do veiculo');
+            if (!this.entryValue || isNaN(parseFloat(this.entryValue))) {
+                errors.push('Por favor, preencha um valor de empréstimo válido.');
             }
 
-            if (erros.length > 0) {
+            if (!this.selectedTerm) {
+                errors.push('Por favor, selecione a quantidade de parcelas.');
+            }
+            
+
+            if (errors.length > 0) {
                 this.errorValidate = true;
-                for (let index = 0; index < erros.length; index++) {
-                    const erro = erros[index];
-                    this.toast.error(erro);
-                }
-                return;
+                errors.forEach(error => {
+                    this.toast.error(error);
+                });
+                return false;
+            } else {
+                this.errorValidate = false;
+                return true;
             }
-
-            this.simulateLoan()
-
         },
         simulateLoan() {
-
-            const valueAfterEntry = this.vehicleSelect.price - this.entryValue
-
-            if (!this.vehicleSelect) {
-                this.toast.error("Selecione um veiculo !!");
-                return;
-            }
-
-            const loan = {
-                sixTimes: parseFloat((valueAfterEntry / 6).toFixed(2)),
-                twelveTimes: parseFloat((valueAfterEntry / 12).toFixed(2)),
-                fortyEightTimes: parseFloat((valueAfterEntry / 48).toFixed(2)),
-                valueAfterEntry
-            }
-
-            this.$store.commit('updateInstallments', loan)
-
         },
-        updateVehicleSelect() {
-            this.$store.commit('updateInstallments', {})
-            this.$store.dispatch('updateVehicleSelect', this.vehicleSelect)
-        }
     },
-
 }
 </script>
 
+
 <style scoped>
+  .container {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .form-column {
+        width: calc(50% - 120px);
+        margin-bottom: 20px;
+    }
+
+    .button-column {
+        width: 100%;
+    }
+
+    @media screen and (max-width: 768px) {
+        .form-column {
+            width: 100%;
+        }
+    }
 body {
     background-color: #f5f5f5;
 }
@@ -132,7 +177,7 @@ body {
     left: 55px;
     top: 218px;
 
-    background: #7D28F7;
+    background: #EF6C00;
     border-radius: 22px;
 }
 
@@ -184,22 +229,30 @@ select {
 }
 
 button {
-    background-color: #7D28F7;
+    background-color:  #273E74;
     cursor: pointer;
     border: none;
     color: white;
-    border-radius: 50px;
-    width: 187px;
-    height: 39px;
+    border-radius: 5px;
+    width: 764px;
+    height: 45px;
     font-style: normal;
-    padding: 10px, 32px, 10px, 32px;
-
+    padding: 10px 32px;
+    margin-left: -0,2px;
+    margin-top: 20px;
     font: 'Roboto';
-    font-weight: 900;
+    font-weight: 500;
+    font-size: 17px;
     text-align: center;
 
     transition: background-color 0.3s ease-in-out;
+}
 
+button:hover {
+    background-color:  #162445;
+    font-weight: 500;
+    font-size: 17px;
+    text-align: center;
 }
 
 input {
@@ -216,7 +269,7 @@ input {
 
 
 button:hover {
-    font-weight: 1000;
+    font-weight: 500;
 }
 
 @media only screen and (max-width: 414px) {
